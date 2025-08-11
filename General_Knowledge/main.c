@@ -1,7 +1,8 @@
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include "strutils.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <string.h>
+#include "strutils.h"
 
 
 int main()
@@ -18,7 +19,9 @@ int main()
     
     printf("%s\n", result);
     
-    free(result);
+    if (strcmp(result, "") != 0){
+    	free(result);
+    }
  
     return 0;
 }

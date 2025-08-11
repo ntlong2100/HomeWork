@@ -1,0 +1,20 @@
+1)
+
+pthread_join:
+1- thread id
+2- con trỏ, trỏ tới giá trị return của thread.
+
+----> chức năng: thread cha đợi thread con kết thúc, thu dọn tài nguyên của thread con.
+
+pthread_create:
+1- địa chỉ của biến lưu thread id (pthread_t)
+2- sử dụng để chỉ định các thuộc tính dùng khi tạo một luồng mới (pthread_attr_t)
+3- con trỏ hàm thread func
+4- con trỏ trỏ đến arg của thread func.
+
+----> chức năng: tạo một thread mới với threadFunc và chạy threadFunc.
+
+
+2) thread có thể kết thúc bằng 2 cách
+- gọi pthread_exit()
+- hàm threadFunc return

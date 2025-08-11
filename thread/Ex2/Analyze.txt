@@ -1,0 +1,32 @@
+1) Tại sao cần phải sử dụng mutex trong bài toán này?
+- nếu không có mutex, sẽ có hiện tượng race condition. Tức là:
+
+
+
+2) Điều gì sẽ xảy ra nếu chúng ta bỏ qua việc sử dụng mutex?
++ counter++ không phải là một lệnh đơn. Thực tế, nó gồm 3 bước máy:
+
+1. Load giá trị của counter vào thanh ghi CPU.
+
+2. Tăng giá trị trong thanh ghi (+1).
+
+3. Ghi kết quả trở lại biến counter trong bộ nhớ.
+
+---> Nếu 2 luồng chạy xen kẽ ở giữa 3 bước này, kết quả có thể bị ghi đè hoặc mất một số lần tăng -> giá trị cuối cùng sai.
+
+****ví dụ minh họa:
+counter = 0;
+
+2 thread t1 và t2 cùng tăng count lên 1 đơn vị (counter++)
+
+thread t1: load counter(0) vào thanh ghi -> tăng counter lên 1 -> chờ
+thread t2: load counter(0) vào thanh ghi -> tăng counter lên 1 --> ghi vào biến counter(1) trong bộ nhớ.
+thread t2: ghi counter (1) vào biến counter trong bộ nhớ.
+
+-----> mặc dù cả thread t1 và t2 đều thực hiện counter++ nhưng giá trị counter lại là 1.
+
+---> 2 luồng chạy xen kẽ ở giữa 3 bước --> mất một lần tăng --> giá trị cuối cùng là 1.
+---> Nếu 2 luồng không chạy xen giữa 3 bước trên --> sẽ không mất lần tăng nào hết, giá trị cuối cùng là 2.
+
+---> giá trị có thể là 1 hoặc 2 ---> giá trị không ổn định
+
